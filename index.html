@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react?dev",
+          "react-dom/client": "https://esm.sh/react-dom/client?dev"
+        }
+      }
+      </script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- <script src="./App.js"></script> -->
+  </head>
+  <body>
+    <div id="root"></div>
+    <style type="text/css">
+        .avatar {
+          margin-left:20px;
+          border-radius: 10%;
+        }
+
+        .btn{
+          border-radius: 10%;
+          height: 120px;
+          background-color: seagreen;
+          color: white; 
+          font-size: 18pt;
+          border: 0px;
+          margin: 10px;
+          padding-right: 10px;
+        }
+    </style>
+    <script type="text/babel" data-type="module">
+      import React from 'react';
+      import { createRoot } from 'react-dom/client';
+      import { useState } from 'react';
+    
+      const user = {
+          name:"wangkai",
+          name2:"zhangtianbo",
+          age:33,
+          url:"https://i.imgur.com/yXOvdOSs.jpg",
+          imageSize:"190px"
+      };
+
+      const products = [
+          {name:"Apple", id:1},
+          {name:"Orange", id:2},
+          {name:"Cat", id:3},
+          {name:"Dog", id:4}
+      ];
+
+      function MyButton({ name, count, onClick }) {
+        return (
+          <button onClick={onClick} className="btn">
+            {name} + {count}
+          </button>
+        );
+      }
+
+      function MyPage() {
+        const [count, setCount] = useState(0);
+        function showMsg(){
+          setCount(count+1);
+        }
+        const listItem = products.map(product => 
+            <li key={product.id}> {product.name} </li>
+        );
+        return <>
+            <MyButton name={user.name} count={count} onClick={showMsg}/>
+            <MyButton name={user.name2} count={count} onClick={showMsg}/>
+            <img 
+                src={user.url} 
+                className="avatar"
+                style={{
+                width: user.imageSize,
+                height: user.imageSize
+                }}
+            />
+            <ul>
+                {listItem}
+            </ul>
+        </>
+      };
+
+      const MyApp = function MyApp(){
+        return (<div>
+                <h1> Welcome to React</h1>
+                <MyPage />
+              </div>);
+      }
+      const root = createRoot(document.getElementById('root'));
+      root.render(<MyApp />);
+    </script>
+  </body>
+</html>
